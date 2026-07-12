@@ -23,11 +23,11 @@ export function Navbar() {
   };
 
   const navLinks = [
-    { id: "about", label: "01. ABOUT", color: "text-muted-foreground hover:text-primary" },
-    { id: "skills", label: "02. SKILLS", color: "text-muted-foreground hover:text-primary" },
-    { id: "projects", label: "03. PROJECTS", color: "text-muted-foreground hover:text-primary" },
-    { id: "scams", label: "04. THREAT_REPORTS", color: "text-destructive hover:text-destructive/80 font-bold glow-red" },
-    { id: "contact", label: "05. CONTACT", color: "text-muted-foreground hover:text-primary" },
+    { id: "about", label: "About", color: "text-muted-foreground hover:text-primary" },
+    { id: "skills", label: "Skills", color: "text-muted-foreground hover:text-primary" },
+    { id: "projects", label: "Projects", color: "text-muted-foreground hover:text-primary" },
+    { id: "scams", label: "Threat Reports", color: "text-destructive hover:text-destructive/80 font-semibold" },
+    { id: "contact", label: "Contact", color: "text-muted-foreground hover:text-primary" },
   ];
 
   return (
@@ -38,20 +38,26 @@ export function Navbar() {
         }`}
       >
         <div className="container mx-auto px-6 flex items-center justify-between">
-          <div className="font-mono font-bold text-xl text-primary tracking-tighter cursor-pointer relative group" onClick={() => window.scrollTo({top: 0, behavior: 'smooth'})}>
-            <span className="absolute -inset-2 bg-primary/20 blur-md opacity-0 group-hover:opacity-100 transition-opacity" />
-            &lt;IBK_SEC /&gt;
+          <div
+            className="font-bold text-lg text-foreground tracking-tight cursor-pointer hover:text-primary transition-colors"
+            onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+          >
+            Ibukun<span className="text-primary">.</span>
           </div>
-          
-          <nav className="hidden md:flex gap-8 font-mono text-sm">
+
+          <nav className="hidden md:flex gap-8 text-sm">
             {navLinks.map((link) => (
-              <button key={link.id} onClick={() => scrollTo(link.id)} className={`${link.color} transition-colors uppercase tracking-widest`}>
+              <button
+                key={link.id}
+                onClick={() => scrollTo(link.id)}
+                className={`${link.color} transition-colors font-mono tracking-wide text-xs uppercase`}
+              >
                 {link.label}
               </button>
             ))}
           </nav>
 
-          <button 
+          <button
             className="md:hidden text-foreground hover:text-primary transition-colors"
             onClick={() => setMobileMenuOpen(true)}
           >
@@ -69,13 +75,13 @@ export function Navbar() {
             transition={{ type: "spring", bounce: 0, duration: 0.4 }}
             className="fixed inset-0 z-[100] bg-background/95 backdrop-blur-xl flex flex-col items-center justify-center border-l border-border"
           >
-            <button 
+            <button
               className="absolute top-6 right-6 text-foreground hover:text-primary p-2"
               onClick={() => setMobileMenuOpen(false)}
             >
               <X className="w-8 h-8" />
             </button>
-            
+
             <nav className="flex flex-col gap-8 font-mono text-xl items-center">
               {navLinks.map((link, i) => (
                 <motion.button
@@ -90,11 +96,6 @@ export function Navbar() {
                 </motion.button>
               ))}
             </nav>
-            
-            <div className="absolute bottom-12 font-mono text-xs text-muted-foreground flex items-center gap-2">
-              <span className="w-2 h-2 bg-primary rounded-full animate-pulse" />
-              SECURE CONNECTION ESTABLISHED
-            </div>
           </motion.div>
         )}
       </AnimatePresence>
