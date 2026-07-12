@@ -1,0 +1,14 @@
+uploads = []
+outputs = []
+
+[[generated]]
+id = "waIAzlaEiYwvWga-6-NV9"
+uri = "file://artifacts/portfolio/src/assets/images/hero-bg.png"
+type = "image"
+title = "Dark digital landscape network"
+
+[[generated]]
+id = "duDIKrh0AjRnOolY_dy6n"
+uri = "file://artifacts/portfolio/src/assets/images/profile.png"
+type = "image"
+title = "Nigerian developer portrait"
