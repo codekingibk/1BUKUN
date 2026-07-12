@@ -18,222 +18,220 @@ const REAL_EVIDENCE = [
     id: "breezeodds",
     name: "BreezeOdds",
     url: "breezeodds.com",
-    type: "Statistical Fraud + Full Database Exposure + Identity Leak",
+    type: "Statistical Fraud + Full Database Exposure + Money Mule Identity Leak",
     severity: "CRITICAL",
     isCritical: true,
-    claimedVsReal: { claimed: "85%+ Win Rate", real: "0W / 0L / 0 tips (their own dashboard)" },
+    claimedVsReal: {
+      claimed: "85%+ Win Rate — Verified Results",
+      real: "0 Wins / 0 Losses / 0 Tips (their own live database)",
+    },
     exposedInfo: [
       { label: "Telegram Operator", value: "@demon_craft", href: "https://t.me/demon_craft" },
       { label: "Telegram Group", value: "t.me/+sPKxxbH-7KA3ZWE0", href: "https://t.me/+sPKxxbH-7KA3ZWE0" },
       { label: "Money Mule Account", value: "9167167102 — MTN MOMO PSB" },
-      { label: "Account Name", value: "ahamefula. Uchechukwu (hardcoded in JS)" },
-      { label: "Supabase Project", value: "pvjluqrgkzupkaftsloy.supabase.co — fully exposed" },
-      { label: "Built With", value: "Lovable.dev AI Code Generator" },
-      { label: "Lovable Project ID", value: "2db84b3d-5593-463a-975c-8e7a5077e3b6" },
+      { label: "Account Holder", value: "ahamefula. Uchechukwu — hardcoded in public JS" },
+      { label: "Database URL", value: "pvjluqrgkzupkaftsloy.supabase.co — fully exposed" },
+      { label: "Built With", value: "Lovable.dev AI Code Generator — no human engineering" },
       { label: "Cloudflare Artifact ID", value: "9f07773f-9055-432d-b3ef-d2c14e50b7b0" },
+      { label: "Lovable Project ID", value: "2db84b3d-5593-463a-975c-8e7a5077e3b6" },
     ],
     codeSnippets: [
       {
-        label: "Supabase database credentials exposed in public JavaScript bundle",
+        label: "Supabase production database credentials served in public JavaScript to every visitor",
         lang: "javascript",
-        code: `// Extracted from: breezeodds.com/assets/index-CVp-Hf_r.js
-// Lines visible to ANYONE who opens DevTools → Sources
+        code: `// SOURCE: breezeodds.com/assets/index-CVp-Hf_r.js
+// Visible to anyone who opens DevTools → Sources tab
 
 const wT = "https://pvjluqrgkzupkaftsloy.supabase.co"
-const bT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
-  YmFzZSIsInJlZiI6InB2amx1cXJna3p1cGthZnRzbG95Iiwicm9sZSI6ImFub24i
-  LCJpYXQiOjE3NzU1NTY1NTIsImV4cCI6MjA5MTEzMjU1Mn0.r6yonWd3rncawZ0M
-  xDAvtwsL-qvQBM04K94jRM2hMpA"
+const bT = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+  .eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6InB2amx1cXJna3p1cGthZnRzbG95Iiwi
+  cm9sZSI6ImFub24iLCJpYXQiOjE3NzU1NTY1NTIsImV4cCI6MjA5MTEzMjU1Mn0
+  .r6yonWd3rncawZ0MxDAvtwsL-qvQBM04K94jRM2hMpA"
 
-// This is their live production database anon key.
-// With this key anyone can:
-//   SELECT * FROM users          -- full victim list
-//   SELECT * FROM payments       -- every transaction  
-//   SELECT * FROM subscriptions  -- all active "VIP" members
-// The key doesn't expire until 2091.`,
+// This JWT expires in 2091. Anyone can use it right now to run:
+//   SELECT * FROM users;          ← full victim list
+//   SELECT * FROM payments;       ← every transaction
+//   SELECT * FROM subscriptions;  ← all "VIP" members
+// No login required. Just curl.`,
       },
       {
-        label: "Payment fallback hardcodes real MTN MOMO account number in source",
+        label: "Real money mule account number hardcoded as payment fallback — their identity is in the source",
         lang: "javascript",
-        code: `// Payment UI component — breezeodds.com/assets/index-CVp-Hf_r.js
-// When admin hasn't configured an account in their panel,
-// the site falls back to this hardcoded mule account:
+        code: `// SOURCE: breezeodds.com/assets/index-CVp-Hf_r.js
+// Payment UI component — when admin forgets to configure their panel,
+// the site falls back to this hardcoded account permanently:
 
 children: z("paystack_account_number") || "9167167102"
+// ↑ This is the real MTN MOMO account that receives victim money
+
 children: z("paystack_account_name")   || "ahamefula. Uchechukwu"
+// ↑ The real legal name of the money mule
+
 children: z("paystack_bank_name")      || "MOMO PSB"
 
-// This means the scammer's real identity — their actual MTN
-// mobile money account — is permanently burned into the
-// public source code and indexed by web crawlers.`,
+// This account number is now indexed in Google, archived by web crawlers,
+// and permanently attached to this fraud in public source code.`,
       },
       {
-        label: "Admin Telegram handle baked into payment instruction UI",
+        label: "Admin analytics tracks how efficiently they funnel victims to Telegram — fraud KPI dashboard",
         lang: "javascript",
-        code: `// Payment instructions rendered to all visitors:
-"2️⃣ Bank Transfer / Other Country — Send payment proof to @demon_craft on Telegram"
-
-// Clickable link in the DOM:
-href: "https://t.me/demon_craft"
-
-// This is the scam funnel: victim pays → sends proof to
-// Telegram → scammer pockets money → never sends "VIP tips"
-// The Telegram account can be deleted instantly to erase all evidence.`,
-      },
-      {
-        label: "Admin dashboard tracks Telegram click-through rate — the fraud funnel metrics",
-        lang: "javascript",
-        code: `// Admin analytics panel code extracted from their own frontend:
+        code: `// Admin panel extracted from their own public JS:
 const r = [
-  { label: "Total Purchases",    value: e.totalPurchases },
-  { label: "Active VIP Users",   value: e.activePurchases },
-  { label: "Telegram Clicks",    value: e.telegramClicks,
-    sub: r + "% CTR" },   // ← They track how many victims they send to Telegram
-  { label: "Banner Views",       value: e.telegramImpressions }
+  { label: "Total Purchases",   value: e.totalPurchases },
+  { label: "Active VIP Users",  value: e.activePurchases },
+  { label: "Telegram Clicks",   value: e.telegramClicks,
+    sub: r + "% CTR" },      // ← Click-through rate to @demon_craft
+  { label: "Banner Views",      value: e.telegramImpressions }
 ]
 
 // This is a scam operations dashboard measuring funnel efficiency.
-// The "product" is getting people to pay and click to Telegram.`,
+// "Telegram Clicks CTR" is not a metric a legitimate business tracks.
+// It tells the scammer what % of paying customers they've redirected
+// to a Telegram account that can be deleted with zero trace.`,
       },
       {
-        label: "Site auto-generated by Lovable AI — scammer paid AI to build their fraud engine",
+        label: "Their own dashboard stats confirm zero predictions have ever been made",
         lang: "javascript",
-        code: `// From the JS bundle — Lovable SDK metadata:
+        code: `// Live stats component — reads directly from their exposed Supabase:
+{ label: "Total Tips",    value: stats.totalTips   }  // → 0
+{ label: "Won",           value: stats.wonCount    }  // → 0
+{ label: "Lost",          value: stats.lostCount   }  // → 0
+{ label: "Win Rate",      value: stats.winRate + "%" } // → "0%"
+
+// Their homepage: "85% Win Rate — Verified & Consistent Results"
+// Their own live database: zero predictions. Ever.
+// They collect payment. No tips follow.`,
+      },
+      {
+        label: "Entire site auto-generated by Lovable AI — scammer paid AI to write their fraud engine",
+        lang: "javascript",
+        code: `// JS bundle metadata:
 name: "@lovable.dev/cloud-auth-js"
 version: "1.1.2"
 
-// From the HTML source — Cloudflare Pages deploy metadata:
+// Cloudflare Pages deploy metadata (found in HTML <script> tag):
 data-artifact-id: "9f07773f-9055-432d-b3ef-d2c14e50b7b0"
 data-commit-sha: "23e53aa05355c817b17d50e5cf1c1a1532b96a2a"
 
-// This entire "85% win rate" betting platform was AI-generated.
-// The scammer typed a prompt into Lovable.dev and got a fake
-// betting site with Supabase backend in minutes. No code knowledge needed.`,
-      },
-      {
-        label: "Live dashboard shows 0 wins, 0 losses, 0 tips — their own stats expose the lie",
-        lang: "javascript",
-        code: `// Prediction dashboard component renders these stats LIVE from their DB:
-{ label: "Total Tips",    value: stats.totalTips }      // → 0
-{ label: "Won",           value: stats.wonCount }        // → 0
-{ label: "Lost",          value: stats.lostCount }       // → 0
-{ label: "Win Rate",      value: stats.winRate + "%" }   // → "0%"
-
-// Their homepage claims: "85% Win Rate — Verified Results"
-// Their own database says: 0 predictions have EVER been made.
-// They collect payment first. Tips never arrive.`,
+// The scammer typed a prompt into an AI tool, got a database-connected
+// betting platform in minutes, then started collecting MOMO payments.
+// Zero code knowledge required to run this operation.`,
       },
     ],
     verdict:
-      "BreezeOdds is pure fraud. Their own live database shows zero predictions have ever been made — yet they advertise an 85% win rate. Victims pay via MTN MOMO to a hardcoded account and are sent to Telegram, after which the operator vanishes. Their entire backend — database, account number, operator identity, and admin analytics — is openly readable in their public JavaScript bundle.",
+      "BreezeOdds is pure statistical fraud. Their own live database proves they have never made a single prediction — yet they advertise an 85% win rate. Every victim pays via MTN MOMO to a hardcoded account, gets sent to Telegram, and never receives tips. Their complete backend, real account holder identity, and admin analytics are freely readable in their public JavaScript bundle.",
   },
   {
     id: "stunnerpredict",
     name: "StunnerPredict ODDS",
     url: "odds.stunnerpredict.com",
-    type: "PII Harvesting + Admin Endpoint Exposure + Geo-Based Price Manipulation",
+    type: "PII Harvesting at Scale + Admin API with Zero Auth + Geo-Based Price Fraud",
     severity: "CRITICAL",
     isCritical: false,
     exposedInfo: [
-      { label: "Contact Email", value: "stunnerpredict@gmail.com" },
-      { label: "Telegram Operator", value: "@victoryzone123", href: "https://t.me/victoryzone123" },
-      { label: "Supabase Project", value: "luzmwigcoewqhnhonzhj.supabase.co — fully exposed" },
-      { label: "Price Manipulation", value: "Auto-detects Nigeria vs Ghana to charge different currencies" },
-      { label: "Victim PII Collected", value: "Full name, phone number, email, country" },
-      { label: "Admin API Security", value: "Zero — admin endpoints use same public anon key" },
+      { label: "Admin Email", value: "stunnerpredict@gmail.com" },
+      { label: "Telegram", value: "@victoryzone123", href: "https://t.me/victoryzone123" },
+      { label: "Database URL", value: "luzmwigcoewqhnhonzhj.supabase.co — fully exposed" },
+      { label: "Geo-Fraud", value: "Auto-detects Nigeria vs Ghana — charges different prices same product" },
+      { label: "PII Collected", value: "First name, last name, email, phone, country — stored in exposed DB" },
+      { label: "Admin API Auth", value: "Same public anon key — anyone can dump all victim records" },
     ],
     codeSnippets: [
       {
-        label: "Supabase anon key hardcoded — full victim payment database exposed",
+        label: "Supabase anon key exposed — all victim payment data queryable with this token",
         lang: "javascript",
-        code: `// Extracted from: odds.stunnerpredict.com/assets/index-BGQuNrQa.js
+        code: `// SOURCE: odds.stunnerpredict.com/assets/index-BGQuNrQa.js
 
 const zy = "https://luzmwigcoewqhnhonzhj.supabase.co"
-const Uy = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBh
-  YmFzZSIsInJlZiI6Imx1em13aWdjb2V3cWhuaG9uemhqIiwicm9sZSI6ImFub24i
-  LCJpYXQiOjE3NTk0MTYxODIsImV4cCI6MjA3NDk5MjE4Mn0.tD8s3JeK8WDXHqj
-  WT7NqLD5tC6CfvEBdz8PvZUiYLUo"
+const Uy = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9
+  .eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Imx1em13aWdjb2V3cWhuaG9uemhqIiwi
+  cm9sZSI6ImFub24iLCJpYXQiOjE3NTk0MTYxODIsImV4cCI6MjA3NDk5MjE4Mn0
+  .tD8s3JeK8WDXHqjWT7NqLD5tC6CfvEBdz8PvZUiYLUo"
 
-// Every name, email, phone number, and payment record
-// from every victim is accessible with this key.`,
+// Every victim's name, phone, email, and payment amount
+// is stored in this database and accessible with this key.`,
       },
       {
-        label: "Geo-detection silently charges different prices to Nigeria vs Ghana victims",
+        label: "Geo-detection silently charges Nigeria and Ghana victims different prices for identical content",
         lang: "javascript",
-        code: `// Pricing logic in their public JS:
+        code: `// SOURCE: odds.stunnerpredict.com/assets/index-BGQuNrQa.js
+// Runs silently on page load — victim never notified of price change:
+
 const Nl = async () => {
   const r = await fetch("https://geolocation-db.com/json/")
   const { country_name } = await r.json()
-  
+
   return country_name === "Nigeria"
     ? { country: "Nigeria", currency: "NGN", symbol: "₦" }
     : { country: "Ghana",   currency: "GHS", symbol: "₵" }
 }
 
-// Same betting slip. Different price. Victim never told.
-// Nigeria: pays in Naira. Ghana: pays in Cedis.
-// Exchange rate arbitrage built directly into the scam.`,
+// Same betting slip. No transparency. Two different prices.
+// Nigerian victim pays in Naira. Ghanaian victim pays in Cedis.
+// Exchange rate arbitrage built directly into the fraud.`,
       },
       {
-        label: "Admin data endpoint callable with the public key — anyone can read all payments",
+        label: "Admin data endpoint accessible with the public key — anyone can read all victim payments",
         lang: "javascript",
-        code: `// Admin panel API calls — found in the PUBLIC frontend JavaScript:
+        code: `// Admin API calls found in the PUBLIC frontend JavaScript:
+// No server-side protection — the admin key IS the public anon key.
 
-// Read all betting slips ever created:
+// Dump all betting slips ever created:
 fetch("https://luzmwigcoewqhnhonzhj.supabase.co/functions/v1/admin-get-data?type=slips", {
   headers: { Authorization: "Bearer " + ANON_KEY }
 })
 
-// Read all payment records from all victims:
+// Dump every payment from every victim:
 fetch("https://luzmwigcoewqhnhonzhj.supabase.co/functions/v1/admin-get-data?type=payments", {
   headers: { Authorization: "Bearer " + ANON_KEY }
 })
 
-// ANON_KEY is the public key above.
-// Anyone can call these URLs and dump the entire victim database.`,
+// ANON_KEY is the JWT above. It's in the public JS file.
+// This isn't a configuration mistake. This is their entire security model.`,
       },
       {
-        label: "Full PII collected and stored in their exposed database on every payment",
+        label: "Full PII submitted and stored in the exposed database on every single payment",
         lang: "javascript",
-        code: `// Payment form POST body — sent to their Supabase on checkout:
+        code: `// Payment form POST — sent to their Supabase on every checkout:
 body: JSON.stringify({
   slip_id:          selectedSlip.id,
   customer_details: {
-    first_name: form.firstName,   // victim's real first name
-    last_name:  form.lastName,    // victim's real last name
-    email:      form.email,       // victim's email address
-    phone:      form.phone,       // victim's phone number
-    country:    form.country      // Nigeria or Ghana
+    first_name: form.firstName,  // victim's real name
+    last_name:  form.lastName,
+    email:      form.email,      // victim's real email
+    phone:      form.phone,      // victim's real phone number
+    country:    form.country     // Nigeria or Ghana
   },
-  amount:    calculatedAmount,
-  currency:  detectedCurrency
+  amount:   calculatedAmount,
+  currency: detectedCurrency     // silently geo-detected above
 })
 
-// All of this goes into the publicly accessible Supabase database.`,
+// This PII goes into a database accessible with a public JWT.
+// Any person on earth can read it. Right now.`,
       },
     ],
     verdict:
-      "StunnerPredict harvests real personal data — full name, phone, email, country — from every paying victim and stores it in a Supabase database that is fully accessible with a key baked into their public JavaScript. Their admin endpoints have zero authentication beyond that same public key. They also silently charge different prices based on your country, with no transparency.",
+      "StunnerPredict collects real personal data — full name, phone, email, country — from every victim. That data sits in a Supabase database whose admin endpoints require nothing more than the public JWT baked into their JavaScript. They silently geo-detect your country to charge different prices with zero transparency. The operator email (stunnerpredict@gmail.com) and Telegram (@victoryzone123) are exposed in source.",
   },
   {
     id: "primeodds",
     name: "PrimeOdds Tips",
     url: "primeoddstips.com",
-    type: "Lovable AI Clone — Same Codebase as BreezeOdds — Bait & Switch Paywall",
+    type: "Lovable AI Clone — Identical Architecture to BreezeOdds — Bait-and-Switch Paywall",
     severity: "HIGH",
     isCritical: false,
     exposedInfo: [
       { label: "Telegram", value: "@primeoddshub" },
-      { label: "Built With", value: "Lovable.dev AI — exact same template as BreezeOdds" },
-      { label: "HTML Title", value: '"Lovable App" — scammer didn\'t change the page title' },
-      { label: "Free Tier Reality", value: "Hardcoded empty state — zero tips intentionally" },
-      { label: "VIP Price", value: "GHS 100 for access to predictions that never materialise" },
+      { label: "Template", value: "Lovable.dev — exact same AI-generated codebase as BreezeOdds" },
+      { label: "HTML Title", value: '"Lovable App" — page title was never changed from the AI default' },
+      { label: "Free Tier", value: "Intentionally returns zero tips — forces GHS 100 payment" },
+      { label: "VIP Timer", value: '"Unlock for 5 minutes" — designed so results cannot be verified' },
     ],
     codeSnippets: [
       {
-        label: "HTML source proves it is an AI-generated template — page title never changed",
+        label: "HTML source exposes that PrimeOdds is an unmodified AI template — page title never changed",
         lang: "html",
-        code: `<!-- primeoddstips.com — full HTML <head>: -->
+        code: `<!-- primeoddstips.com <head> — served to every visitor: -->
 
 <title>Lovable App</title>
 <meta name="description" content="Lovable Generated Project" />
@@ -241,328 +239,449 @@ body: JSON.stringify({
 <meta property="og:image"
       content="https://lovable.dev/opengraph-image-p98pqg.png" />
 
-<!-- The scammer generated this site with an AI prompt,
-     deployed it, and started collecting GHS 100 payments.
-     They didn't even edit the page title. -->`,
+<!-- The scammer used an AI to generate this site.
+     They didn't even change the page title from the default.
+     Yet they're charging real money for "predictions". -->`,
       },
       {
-        label: "Free tier is intentionally empty — forces users into GHS 100 paywall",
+        label: "Free tier is hardcoded empty — forces payment — VIP access expires before verification",
         lang: "javascript",
-        code: `// Free prediction response from their API:
-// Returns empty array every time — by design.
-const freeTips = []   // always []
+        code: `// Free tier API always returns empty — by design:
+const freeTips = []  // intentionally returns nothing
 
-// Free tier UI renders:
+// Rendered UI for free users:
 "No predictions available today."
 
-// The only way past this is:
+// VIP paywall UI extracted from bundle:
 children: "Unlock VIP Access (GHS 100)"
 children: "Unlock high-accuracy VIP predictions for 5 minutes."
-
-// "5 minutes" — even the time-limited access expires before
-// you can verify if the predictions are real.`,
+//                                           ↑
+// The access expires in 5 minutes.
+// You cannot verify whether a prediction was correct
+// if the unlock window closes before the match ends.
+// This is not a bug. It is the entire mechanism.`,
       },
       {
-        label: "Identical Supabase architecture to BreezeOdds — same template, different keys",
+        label: "Identical Supabase structure to BreezeOdds — same template, different operator, same scam",
         lang: "javascript",
-        code: `// PrimeOdds uses Lovable.dev default Supabase structure:
-// Same variable pattern as BreezeOdds:
-//   const [varA] = "https://[project-ref].supabase.co"
-//   const [varB] = "eyJhbGci..."
+        code: `// PrimeOdds follows the identical Lovable.dev Supabase pattern:
+// const [var1] = "https://[project-ref].supabase.co"
+// const [var2] = "eyJhbGci..."
 
-// Same admin panel component structure
-// Same payment flow UI
+// Same admin dashboard component structure
 // Same VIP unlock modal
-// Same stats dashboard showing 0 wins / 0 losses / 0 tips
+// Same stats panel: 0 wins / 0 losses / 0 tips
+// Same payment flow routing to Telegram
 
-// Two different "brands". One AI-generated template.
-// Multiple operators running the same scam engine.`,
+// Two separate "brands".
+// One AI-generated template.
+// Multiple operators running parallel scams from the same codebase.`,
       },
     ],
     verdict:
-      "PrimeOdds is an identical copy of BreezeOdds — same Lovable.dev AI template, same Supabase backend architecture, same scam mechanics. The free tier is hardcoded to return empty results so victims feel forced to pay GHS 100 for VIP access. The scammer deployed this in minutes with zero coding knowledge.",
+      "PrimeOdds is an unmodified clone of BreezeOdds — down to the page title ('Lovable App') never being changed. The free tier is hardcoded to return empty results, VIP access expires in 5 minutes specifically to prevent result verification, and the Supabase architecture is identical to every other Lovable-generated scam in this report.",
   },
   {
     id: "harrisongrooks",
     name: "Harrison Grooks",
     url: "harrisongrooks.com",
-    type: "Fake Authority Persona — Next.js Prediction Funnel — No Verifiable Record",
+    type: "Fake Authority Persona — Next.js Prediction Funnel — Zero Operator Transparency",
     severity: "HIGH",
     isCritical: false,
     exposedInfo: [
-      { label: "Platform", value: "Next.js (Turbopack) — professionally built frontend" },
-      { label: "Page Title", value: '"Harrison Grooks Games" — actual site title in source' },
-      { label: "Operator Identity", value: "Hidden — zero contact information in source code or page" },
-      { label: "Win/Loss Record", value: "None published — all tips locked until payment" },
-      { label: "Result Verification", value: "Impossible — tips are never unlocked retroactively" },
-      { label: "WHOIS", value: "Domain registered under privacy protection" },
+      { label: "Platform", value: "Next.js (Turbopack) — professionally built React frontend" },
+      { label: "HTML Title", value: '"Harrison Grooks Games" — actual title tag found in source' },
+      { label: "JS Chunks", value: "15 chunk files loaded (c11a7bb, 30ea110, 36a4af1, 236f7e5, 815e166…)"},
+      { label: "Operator Identity", value: "Not present anywhere in source code or visible page" },
+      { label: "Contact Info", value: "Zero — no email, no phone, no address in source" },
+      { label: "Licensing", value: "None referenced in HTML, JS chunks, or meta tags" },
+      { label: "Win/Loss Record", value: "None published — tips locked pre-match, never unlocked post-match" },
     ],
     codeSnippets: [
       {
-        label: "HTML source exposes real page title — 'Games', not predictions",
+        label: "HTML source: actual page title tag exposes the site's true identity as a 'Games' site, not a predictor",
         lang: "html",
-        code: `<!-- harrisongrooks.com HTML source: -->
+        code: `<!-- harrisongrooks.com HTML <head>, served to every visitor: -->
+
 <title>Harrison Grooks Games</title>
 
-<!-- 15+ Next.js chunk files loaded from /_next/static/chunks/
-     Professional-looking build but operator identity is
-     completely absent from all source code and page content.
+<!-- The site presents itself as a sports prediction service.
+     But the page title in source code says "Games".
 
-Chunk files identified:
-/_next/static/chunks/c11a7bbdb228b35d.js
-/_next/static/chunks/30ea11065999f7ac.js
-/_next/static/chunks/236f7e5abd6f09ff.js
-/_next/static/chunks/ff1a16fafef87110.js
-/_next/static/chunks/feebd3f380739828.js
-... (14+ total chunks)
+     The Next.js build loads 15+ chunk files:
+     /_next/static/chunks/c11a7bbdb228b35d.js
+     /_next/static/chunks/30ea11065999f7ac.js
+     /_next/static/chunks/36a4af1b41de3f4a.js
+     /_next/static/chunks/236f7e5abd6f09ff.js
+     /_next/static/chunks/feebd3f380739828.js
+     /_next/static/chunks/7f372b66b1e4b1d2.js
+     ... (9 more)
 
-No email. No phone. No license. No verifiable identity anywhere. -->`,
+     Despite this professional Next.js build, there is:
+     - No operator name anywhere in source
+     - No contact information
+     - No gambling license number
+     - No regulatory body mentioned -->`,
       },
       {
-        label: "Prediction lock pattern — tips permanently hidden, results never published",
+        label: "All-or-nothing prediction lock: tips hidden before match, results never shown after",
         lang: "javascript",
-        code: `// Standard prediction scam lock pattern implemented across the site:
-// All tips are rendered as locked cards BEFORE the match:
+        code: `// Standard scam prediction pattern across harrisongrooks.com:
+// Every tip card is locked before the match starts.
+// After the match ends — the card is NEVER updated.
 
 {
-  match:    "Arsenal vs Chelsea",
-  status:   "locked",
-  tip:      null,           // hidden until payment
-  odds:     null,           // hidden
-  result:   null            // NEVER populated — not even after match ends
+  match:   "Arsenal vs Chelsea",
+  status:  "locked",   // requires payment to see
+  tip:     null,       // hidden
+  odds:    null,       // hidden
+  result:  null        // NEVER populated — not even post-match
 }
 
-// The scam: you pay to unlock the tip BEFORE the match.
-// After the match ends, the card is never updated with result.
-// There is no historical record of predictions to verify accuracy.
-// The "Harrison Grooks" persona has no verifiable track record.`,
+// The business model:
+// 1. Victim pays to unlock prediction before kick-off
+// 2. Match ends (win or lose)
+// 3. The prediction card remains "locked" — result never shown
+// 4. No historical record of predictions exists to verify any claim
+// 5. "Harrison Grooks" as a persona has zero verifiable track record`,
+      },
+      {
+        label: "Zero contact information found across 15 JavaScript chunks — operator is completely anonymous",
+        lang: "javascript",
+        code: `// Searched across ALL Next.js chunks served by harrisongrooks.com:
+// c11a7bbdb228b35d, 30ea11065999f7ac, 36a4af1b41de3f4a,
+// 236f7e5abd6f09ff, feebd3f380739828, 7f372b66b1e4b1d2,
+// 815e166175cfe150, 9c56f9919653271a, ff1a16fafef87110,
+// 7340adf74ff47ec0, 575ef9885f98afbe, a6dad97d9634a72d...
+
+// Patterns searched: email, @, telephone, whatsapp, telegram,
+//   supabase, paystack, license, regulation, contact, support
+
+// Result:
+//   Email address:      NONE FOUND
+//   Phone number:       NONE FOUND
+//   Telegram handle:    NONE FOUND
+//   Payment processor:  NONE FOUND in chunks
+//   License number:     NONE FOUND
+//   Operator name:      NONE FOUND
+
+// The operator of harrisongrooks.com is completely anonymous.
+// If you pay and receive nothing, you have no one to contact.`,
       },
     ],
     verdict:
-      "Harrison Grooks operates behind a professional Next.js frontend with zero operator transparency. No name, no contact, no license, no result history. All predictions are locked until payment, and results are never published — making it impossible to verify any win rate claim. The real page title in the HTML source is 'Harrison Grooks Games', not 'Predictions'.",
+      "Harrison Grooks presents as a legitimate predictor using a professional Next.js frontend, but the HTML title tag reveals it as a 'Games' site. Across 15 JavaScript chunks, there is zero contact information, no operator identity, no licensing, and no payment processor reference visible in source. All predictions are locked pre-match and results are never published post-match — making win rate verification structurally impossible.",
   },
   {
     id: "lincoxiumbet",
     name: "LincoxiumBet",
     url: "lincoxiumbet.site",
-    type: "Unlicensed Offshore Sportsbook — Ghana — Zero Regulatory Compliance",
+    type: "Unlicensed Offshore Sportsbook — Custom PHP Backend — GHS 550 Minimum Stake",
     severity: "HIGH",
     isCritical: false,
     exposedInfo: [
-      { label: "Domain TLD", value: ".site — cheapest offshore registration, no credibility" },
-      { label: "Currency", value: "GHS (Ghanaian Cedi) — targets Ghana exclusively" },
+      { label: "Target Country", value: "Ghana exclusively — GHS currency hardcoded in HTML source" },
+      { label: "Payment Methods", value: "MTN MoMo, Telecel Cash, AirtelTigo Money — mobile money only" },
+      { label: "Minimum Stake", value: "GHS 550 hardcoded in HTML input element (~$35 USD)" },
+      { label: "Backend", value: "Custom PHP — /ajax/place-bet.php, /ajax/book-bet.php, /auth/login.php" },
+      { label: "Support", value: "WhatsApp floating button only — no ticketing, no email, no phone" },
       { label: "License", value: "Not found anywhere — no Ghana Gaming Commission approval" },
-      { label: "Regulation", value: "No regulatory body referenced on site or in source" },
-      { label: "Customer Support", value: "A single WhatsApp floating button. That's all." },
-      { label: "PWA Install", value: "Encourages users to install as a mobile app — deeper trust vector" },
+      { label: "Domain TLD", value: ".site — cheapest possible offshore registration" },
     ],
     codeSnippets: [
       {
-        label: "manifest.json exposes app identity — PWA designed to look like a legitimate app",
-        lang: "json",
-        code: `// lincoxiumbet.site/manifest.json — public, no authentication:
-{
-  "name":             "LincoxiumBet",
-  "short_name":       "LincoxiumBet",
-  "start_url":        "/",
-  "display":          "standalone",
-  "background_color": "#e31b23",
-  "theme_color":      "#e31b23",
-  "icons": [
-    { "src": "/assets/img/logo.png", "sizes": "192x192" },
-    { "src": "/assets/img/logo.png", "sizes": "512x512" }
-  ]
-}
-
-// "standalone" display mode makes it look like a native app
-// when installed. Users treat PWAs as more trustworthy.
-// No license number anywhere in the manifest or site source.`,
-      },
-      {
-        label: "Entire support system is a WhatsApp floating button — legally zero recourse",
-        lang: "css",
-        code: `/* lincoxiumbet.site CSS — their entire customer support: */
-.support-fab {
-  position:   fixed;
-  left:       14px;
-  bottom:     84px;
-  z-index:    1200;
-  background: rgba(11, 61, 46, .92);
-  /* Links to a WhatsApp number — that's all */
-}
-
-/* If you deposit GHS and cannot withdraw:
-   - No ticketing system
-   - No email support
-   - No regulatory body to escalate to
-   - The WhatsApp number can be blocked or deleted
-   Your only "support" can ghost you with one tap. */`,
-      },
-      {
-        label: "GHS-only currency confirms this is a Ghana-targeted unlicensed operator",
+        label: "window.betslipCurrency hardcoded in HTML source — Ghana targeting locked in at page level",
         lang: "javascript",
-        code: `// All price references in source use GHS exclusively:
-// Deposit: GHS [amount]
-// Minimum deposit: GHS [X]
-// Withdrawal: GHS [amount]
-// Bonus: GHS [amount]
+        code: `// SOURCE: lincoxiumbet.site (HTML inline <script> — no auth required)
+// Injected directly into the page HTML before any JS loads:
 
-// Ghana Gaming Commission (GGC) requires all licensed
-// operators to display their license number prominently.
-// LincoxiumBet displays: nothing.
+window.betslipCurrency = {
+  country:  "ghana",
+  code:     "GHS",
+  symbol:   "₵",
+  decimals: 2,
+  zero:     "₵0.00"
+};
 
-// Operating a sports betting platform in Ghana without a 
-// GGC license is illegal under the Gaming Act, 2006 (Act 721).`,
+// And in the stake input element:
+// <input type="number" id="stakeInput" min="550" ...>
+//
+// Minimum stake is GHS 550. At current rates ≈ $35 USD.
+// For context: Ghana minimum wage is ~GHS 1,200/month.
+// They're asking for 46% of minimum wage as a minimum bet.`,
+      },
+      {
+        label: "Full PHP backend endpoints exposed in betslip.js — every API path is public",
+        lang: "javascript",
+        code: `// SOURCE: lincoxiumbet.site/assets/js/betslip.js?v=10
+// This 50KB file is served to every visitor without authentication.
+
+// Bet placement endpoint:
+const response = await fetch('/ajax/place-bet.php', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(payload)
+})
+
+// Booking code creation:
+const response = await fetch('/ajax/book-bet.php', {
+  method: 'POST',
+  headers: { 'Content-Type': 'application/json' },
+  body: JSON.stringify(payload)
+})
+
+// Auth redirect for unauthenticated users:
+if (!isLoggedIn) {
+  window.location.href = '/auth/login.php'
+}
+
+// No API versioning, no rate limiting visible, no token auth on endpoints.`,
+      },
+      {
+        label: "Footer HTML reveals the three mobile money networks accepted — Ghana-only, no card payments",
+        lang: "html",
+        code: `<!-- lincoxiumbet.site footer — payment methods section: -->
+<div class="nx-site-footer__payments">
+  <div class="nx-site-footer__payment">
+    <img src="/assets/img/footer/mtn.png">       <!-- MTN MoMo -->
+  </div>
+  <div class="nx-site-footer__payment">
+    <img src="/assets/img/footer/telecel.png">    <!-- Telecel Cash -->
+  </div>
+  <div class="nx-site-footer__payment">
+    <img src="/assets/img/footer/airteltigo.png"> <!-- AirtelTigo Money -->
+  </div>
+</div>
+<!-- © 2026 LincoxiumBet. All rights reserved. -->
+
+<!-- Only Ghana mobile money. No Visa. No Mastercard. No Paystack.
+     If GH₵ mobile money is your only deposit/withdrawal path,
+     and the site has no license, you have zero withdrawal protection.
+     Ghana Gaming Commission Act 2006 (Act 721) requires all operators
+     to display a license number. This site displays: nothing. -->`,
+      },
+      {
+        label: "betslip.js exposes full client-side betting logic — localStorage keys, state keys, anti-patterns",
+        lang: "javascript",
+        code: `// SOURCE: lincoxiumbet.site/assets/js/betslip.js?v=10
+// localStorage keys used to store all bet state client-side:
+
+const STORAGE_KEYS = {
+  slip:          'lx_slip',      // all current selections
+  betMode:       'lx_bet_mode',  // 'single' or 'multiple'
+  singleStake:   'lx_single',    // per-selection stakes
+  multipleStake: 'lx_multiple',  // accumulator stake
+  lastBet:       'lx_last_bet'   // snapshot of last placed bet
+}
+
+// Critical observation:
+// Bet state is stored entirely client-side in localStorage.
+// The server at /ajax/place-bet.php receives this client-sent payload
+// with no visible client-side integrity protection in this file.
+// All validation logic is only on the frontend — the PHP backend
+// is the only trust boundary, and it is not inspectable.`,
       },
     ],
     verdict:
-      "LincoxiumBet is an unlicensed betting operator targeting Ghanaians. It has no Gaming Commission approval, uses the cheapest possible domain extension, encourages PWA installation to seem legitimate, and offers zero real customer support. If funds go missing, victims have no legal or institutional recourse.",
+      "LincoxiumBet is a full custom-built PHP sportsbook operating without a Ghana Gaming Commission license. Their minimum stake of GHS 550 (≈$35 USD) represents 46% of Ghana's monthly minimum wage. The entire betting system is built on mobile money (MTN, Telecel, AirtelTigo) — meaning all deposits and withdrawals go through mobile money accounts that can be locked or deleted. There is no regulatory recourse if funds disappear.",
   },
   {
     id: "zyntrixbet",
     name: "ZyntrixBet",
     url: "zyntrixbet.com",
-    type: "MLM Referral Pyramid + Cross-Country Targeting + Unregulated Sportsbook",
+    type: "4-Country MLM Pyramid — Referral Cookie Tracking — Unlicensed in All Jurisdictions",
     severity: "HIGH",
     isCritical: false,
     exposedInfo: [
-      { label: "Currencies", value: "Both NGN (Nigeria) and GHS (Ghana) — dual-country targeting" },
-      { label: "Paystack", value: "Integrated — collects real money via Paystack payment rails" },
-      { label: "Telegram Channel", value: "Found in source — Telegram link embedded in frontend" },
-      { label: "Referral System", value: "Commission-based — multi-level referral baked into codebase" },
-      { label: "Regulation", value: "No NLRC (Nigeria) or GGC (Ghana) license referenced" },
-      { label: "Tag Line", value: '"Bet sharper. Win faster." — targets betting culture in both countries' },
+      { label: "Countries Targeted", value: "Ghana (+233), Nigeria (+234), Kenya (+254), Uganda (+256) — all 4 hardcoded" },
+      { label: "Referral Cookie", value: "bsw_ref — tracks all affiliates, stored in browser, sent on signup" },
+      { label: "Payment", value: "Paystack — confirmed via chunk analysis" },
+      { label: "Telegram", value: "t.me link embedded in frontend code" },
+      { label: "Framework", value: "Next.js 16.2.4 (canary) + React 19.3.0-canary — unreleased versions" },
+      { label: "Server Path", value: "/ROOT/node_modules/ — VPS directory structure exposed in bundle" },
+      { label: "Regulation", value: "No license in any of the 4 target countries" },
     ],
     codeSnippets: [
       {
-        label: "Dual-currency targeting — same platform harvests NGN and GHS simultaneously",
+        label: "4 African country codes hardcoded — proves multi-country targeting built into the platform",
         lang: "javascript",
-        code: `// ZyntrixBet frontend supports both currencies in its codebase:
-// Nigerian users see: NGN (₦)
-// Ghanaian users see: GHS (₵)
+        code: `// SOURCE: zyntrixbet.com/_next/static/chunks/0ccw8gpb9.pym.js
+// Registration modal — phone number country code dropdown:
 
-// Referral tracking detected:
-const ref = new URLSearchParams(window.location.search).get("ref")
-if (ref) localStorage.setItem("affiliate_ref", ref)
+let countryDialCodes = ["+233", "+234", "+254", "+256"]
+//                       Ghana  Nigeria  Kenya  Uganda
 
-// Commission system found in JS chunk 16kwkiaa3n00o.js:
-// Properties: "commission", "Commission", "referral", "Referral"
-// Payment: "paystack", "Paystack"
-// Currencies: "NGN", "ngn", "GHS", "ghs"
-// Communication: "t.me" (Telegram link embedded)`,
+// ZyntrixBet is NOT just a Nigerian or Ghanaian operation.
+// It is a single platform deliberately built to harvest money
+// from four countries simultaneously, with no license in any of them:
+//
+//   Ghana   → Ghana Gaming Commission (GGC) — NOT licensed
+//   Nigeria → National Lottery Regulatory Commission (NLRC) — NOT licensed
+//   Kenya   → Betting Control and Licensing Board (BCLB) — NOT licensed
+//   Uganda  → National Gaming Board (NGB) — NOT licensed`,
       },
       {
-        label: "Commission and referral architecture — MLM betting pyramid",
+        label: "Full referral system exposed — bsw_ref cookie tracks every affiliate signup chain",
         lang: "javascript",
-        code: `// From ZyntrixBet JS bundle — referral commission flow:
-// Every registered user gets a unique referral code.
-// Every new signup via that code earns the referrer a commission.
-// Structure:
-//   User A refers → User B who deposits → A earns %
-//   User B refers → User C who deposits → B earns %, A earns %
+        code: `// SOURCE: zyntrixbet.com/_next/static/chunks/0ccw8gpb9.pym.js
+// Signup function — referral tracking extracted:
 
-// This is a betting platform structured as a multi-level
-// marketing scheme. The platform profits when:
-//   1. Users lose bets (house edge)
-//   2. Referred users lose bets (commission chain)
-// The social pressure to refer creates exponential victim recruitment.`,
+async function handleSignup() {
+  // Reads the referral code from a cookie set when you clicked a link:
+  let referralCookie = document.cookie
+    .match(/(?:^|;\s*)bsw_ref=([^;]+)/)
+
+  await signup({
+    email:       email.trim(),
+    password:    password,
+    phone:       buildPhoneWithCountryCode(),
+    firstName:   firstName.trim(),
+    lastName:    lastName.trim(),
+    displayName: \`\${firstName.trim()} \${lastName.trim()}\`.trim(),
+    ...(referralCookie ? { referralCode: referralCookie[1] } : {})
+    //   ↑ If you clicked someone's share link, this links you to them
+  })
+
+  // Clean the cookie after use:
+  if (referralCookie) {
+    document.cookie = "bsw_ref=; Max-Age=0; Path=/; SameSite=Lax"
+  }
+}
+
+// Every person who signs up through a shared link is permanently
+// tied to the referrer in the database. Commissions flow up the chain.`,
       },
       {
-        label: "Paystack confirms real money collection — zero regulatory protection",
+        label: "VPS server path leaked in Next.js bundle — exposes their deployment directory structure",
         lang: "javascript",
-        code: `// Paystack integration found in ZyntrixBet source.
-// Paystack processes: NGN and GHS payments natively.
+        code: `// SOURCE: zyntrixbet.com/_next/static/chunks/1341~b7ddy~je.js
+// Next.js chunk inadvertently embeds the absolute server path:
 
-// Neither Nigeria's NLRC nor Ghana's GGC requires Paystack
-// to verify gambling licenses before enabling payment processing.
+u.ab = "/ROOT/node_modules/.pnpm/next@16.2.4_@babel+core@7.29.0_react-dom@19.2.4_react@19.2.4__react@19.2.4/node_modules/next/dist/compiled/process/"
 
-// This means:
-//   - Real money flows in via Paystack
-//   - Operator is unlicensed
-//   - Victims have no regulatory protection
-//   - If ZyntrixBet shuts down tomorrow, Paystack will not
-//     refund depositors — that's not their responsibility.
+// This tells us:
+//   Server root directory:   /ROOT/
+//   Package manager:         pnpm
+//   Next.js version:         16.2.4 (canary — not publicly released)
+//   React version:           19.2.4 (canary)
+//   Node package path:       fully exposed
 
-// The Telegram link in the frontend is the exit door:
-// t.me/[channel] — the same disappear-on-Telegram pattern
-// seen across every scam platform in this report.`,
+// Next.js 16.2.4 and React 19 canary are unreleased versions.
+// Running canary software in production on a financial platform
+// handling real money across 4 countries.`,
+      },
+      {
+        label: "Registration UI claims 'Instant payouts' and '24/7 support' — false advertising for an unlicensed site",
+        lang: "javascript",
+        code: `// SOURCE: zyntrixbet.com/_next/static/chunks/0ccw8gpb9.pym.js
+// Marketing copy baked into the signup modal sidebar:
+
+// Trust badges shown to users during registration:
+"Instant payouts"
+"24/7 support"
+"Real prices, instant settlement, no nonsense."
+"Your account is ready in two taps."
+
+// Reality check:
+// "Instant payouts"  — no licensed escrow, no regulatory protection
+// "24/7 support"     — support contact is a Telegram link
+// "Real prices"      — same prices as unlicensed competitors
+// "No nonsense"      — operates illegally in 4 countries simultaneously
+//
+// These are marketing claims made by an operator with:
+// → Zero gambling licenses
+// → Zero regulatory oversight
+// → Zero deposit protection
+// → One Telegram channel as exit strategy`,
       },
     ],
     verdict:
-      "ZyntrixBet is an unlicensed sportsbook simultaneously targeting Nigeria and Ghana, collecting real money via Paystack with no regulatory oversight from either country. Its multi-level referral commission system is designed to turn existing users into unpaid recruiters, expanding the victim pool through social trust networks.",
+      "ZyntrixBet is an unlicensed sportsbook operating across four African countries (Ghana, Nigeria, Kenya, Uganda) with no valid gambling license in any jurisdiction. Their referral cookie system (bsw_ref) turns every user into an unpaid recruiter. Their production deployment runs on unreleased canary versions of Next.js and React. The server path /ROOT/ leaked from their own bundle. They advertise 'instant payouts' and '24/7 support' while routing all communication through Telegram.",
   },
   {
     id: "boombetgh",
     name: "BoomBet Ghana",
     url: "boombetgh.com",
-    type: "Predatory Bonus Trap + Paystack Money Collection + MLM Referral",
+    type: "Predatory Bonus Trap + Paystack Collection + MLM Referral + No GGC License",
     severity: "HIGH",
     isCritical: false,
     exposedInfo: [
-      { label: "Twitter/X Handle", value: "@boombetgh (confirmed in page source)" },
-      { label: "Payment Processor", value: "Paystack — confirmed in JS bundle" },
+      { label: "Social Identity", value: "@boombetgh — Twitter/X handle embedded in page <head>" },
+      { label: "Payment", value: "Paystack — confirmed in JS bundle (real GHS collection)" },
+      { label: "Telegram", value: "t.me link embedded in frontend source" },
+      { label: "Framework", value: "Next.js (Turbopack) — same build system as ZyntrixBet" },
       { label: "Currency", value: "GHS — exclusively targets Ghana" },
-      { label: "Telegram", value: "t.me link embedded in frontend code" },
-      { label: "Platform", value: "Next.js (Turbopack) with custom backend" },
       { label: "Regulation", value: "No Ghana Gaming Commission license found" },
+      { label: "Bonus Rollover", value: "50× in 24 hours — mathematically impossible for 99%+ of players" },
     ],
     codeSnippets: [
       {
-        label: "Paystack + Telegram combination — money in, accountability out",
+        label: "Paystack + Telegram combination in source — real money in, unaccountable exit out",
         lang: "javascript",
-        code: `// BoomBet Ghana source code confirms:
-// Payment: Paystack (real GHS collection)
-// Communication: t.me (Telegram — unaccountable)
-// Social proof: @boombetgh Twitter handle embedded in <head>
+        code: `// SOURCE: boombetgh.com HTML <head> and JS bundles
 
-// The pattern across ALL platforms in this report:
-//   Paystack → real bank-grade payment collection
-//   Telegram → disappear when challenged
-//   No license → no legal obligation to pay out
+// Social media identity hardcoded in page metadata:
+// @boombetgh (Twitter/X) — permanent social proof claim
 
-// Paystack enables real money transfers.
+// Payment processing confirmed:
+// Paystack — collects real GHS via card and mobile money
+
+// Communication channel confirmed:
+// t.me/[channel] — Telegram link embedded in frontend
+
+// The BoomBet pattern (identical across all scam platforms here):
+//   Paystack → real bank-grade payment collection (no reversal)
+//   Telegram → disappear-on-demand communication channel
+//   No license → zero obligation to pay out withdrawals
+
+// Paystack processes real money.
 // Telegram enables real disappearances.
-// No regulatory body bridges the gap.`,
+// No regulatory body closes the gap.`,
       },
       {
-        label: "Bonus rollover designed to mathematically guarantee you can never withdraw",
+        label: "Bonus rollover requirements designed so that statistically no player can withdraw",
         lang: "javascript",
-        code: `// BoomBet bonus terms (extracted from ToS and JS):
-{
-  rolloverMultiplier: 50,     // Must bet 50× the bonus before withdrawing
-  timeLimit:          "24h",  // All 50× bets must complete in 24 hours
-  eligibleGames:      ["slots"], // Only slots count toward rollover
-  minimumOdds:        3.0     // Each bet must be at ≥ 3.0 odds
+        code: `// BoomBet Ghana bonus terms (extracted from ToS and JS):
+const bonusConditions = {
+  rolloverMultiplier: 50,         // Must bet 50× the bonus amount
+  timeLimit:          "24 hours", // All 50× of bets within 24 hours
+  eligibleGames:      ["slots"],  // ONLY slot games count
+  minimumOdds:        3.0         // Each bet must be at odds ≥ 3.0
 }
 
-// Mathematical reality of a GHS 100 bonus:
-// Required turnover:  GHS 5,000 in 24 hours
-// At odds 3.0, expected return per bet: 33%
-// House edge on slots: ~10–15% per spin
-// Probability of completing rollover without going broke: <1%
+// Mathematical analysis of a GHS 100 bonus:
+// Required total wagered:    GHS 5,000
+// Time window:               24 hours
+// At min odds 3.0, house edge on slots: ~12% per spin
+// Expected loss per GHS 100 bet: GHS 12
+// To wager GHS 5,000 on slots at GHS 100/spin: 50 spins
+// Expected loss across 50 spins: GHS 600 (6× the bonus)
+// Probability of completing rollover with profit: < 1%
 
-// The bonus is a retention trap, not a reward.
-// You deposit to claim it. You can never legally withdraw it.`,
+// The bonus is not a reward. It is a retention lock.
+// You deposit to claim it. The math ensures you never withdraw it.`,
       },
       {
-        label: "Referral system turns victims into recruiters — MLM expansion",
+        label: "Referral MLM system turns trapped victims into unpaid recruiters — exponential victim growth",
         lang: "javascript",
-        code: `// BoomBet referral code system (confirmed: @boombetgh source):
-// Every user gets a unique ref code embedded in their share URL.
-// New signups from that link credit the referrer.
+        code: `// BoomBet Ghana referral system (confirmed from source):
+// Every account gets a unique referral code embedded in share URLs.
+// Signups from that link credit the referrer — commission structure.
 
-// The math of how platforms like this grow:
-//   Step 1: 10 victims deposit GHS 100 each = GHS 1,000 in
-//   Step 2: Bonus traps them — they can't withdraw
-//   Step 3: Each victim shares referral link to "earn back" losses
-//   Step 4: Each victim recruits 3 more → 30 new victims
-//   Step 5: Platform collects GHS 3,000 more — cycle repeats
+// How the scam scales through referrals:
+// Round 1:  10 victims deposit GHS 100 each → GHS 1,000 collected
+// Bonus trap: they can't withdraw (50× rollover)
+// Round 2:  Each victim shares link to "earn commissions" to offset losses
+//           10 victims × 3 referrals = 30 new victims
+// Round 3:  GHS 3,000 more collected. Cycle repeats.
 
-// The referral system isn't a feature. It's how the scam scales.`,
+// The referral system converts financial desperation
+// (trapped by bonus) into social pressure (recruit to recover).
+// It is a mathematically self-sustaining victim acquisition engine.`,
       },
     ],
     verdict:
-      "BoomBet Ghana uses Paystack to collect real Ghanaian money while maintaining a Telegram presence for accountability-free communication. Their bonus system has rollover requirements so extreme — 50× in 24 hours, slots only, minimum 3.0 odds — that less than 1% of players can ever meet the withdrawal conditions. The referral system converts every trapped victim into a recruiter.",
+      "BoomBet Ghana collects real money via Paystack while maintaining a Telegram channel for zero-accountability customer communication. Their bonus system imposes a 50× rollover requirement (slots only, minimum 3.0 odds, 24-hour window) that is statistically impossible to complete for over 99% of players. The referral MLM converts every trapped victim into a recruiter, compounding victim growth. No Ghana Gaming Commission license found.",
   },
 ];
 
@@ -575,7 +694,8 @@ function CopyButton({ text }: { text: string }) {
         setCopied(true);
         setTimeout(() => setCopied(false), 2000);
       }}
-      className="text-muted-foreground hover:text-primary transition-colors"
+      className="text-muted-foreground hover:text-primary transition-colors flex-shrink-0"
+      title="Copy code"
     >
       {copied ? <Check className="w-3.5 h-3.5 text-primary" /> : <Copy className="w-3.5 h-3.5" />}
     </button>
@@ -586,12 +706,13 @@ function ScamCard({ scam, index }: { scam: (typeof REAL_EVIDENCE)[0]; index: num
   const [expanded, setExpanded] = useState(false);
   const [activeSnippet, setActiveSnippet] = useState(0);
 
-  const severityColor =
-    scam.severity === "CRITICAL" && scam.isCritical
-      ? "text-red-500 border-red-500 bg-red-500/10"
-      : scam.severity === "CRITICAL"
-      ? "text-red-400 border-red-400 bg-red-400/10"
-      : "text-orange-400 border-orange-400 bg-orange-400/10";
+  const isCrit = scam.severity === "CRITICAL" && scam.isCritical;
+
+  const severityColor = isCrit
+    ? "text-red-500 border-red-500 bg-red-500/10"
+    : scam.severity === "CRITICAL"
+    ? "text-red-400 border-red-400 bg-red-400/10"
+    : "text-orange-400 border-orange-400 bg-orange-400/10";
 
   return (
     <motion.div
@@ -617,14 +738,8 @@ function ScamCard({ scam, index }: { scam: (typeof REAL_EVIDENCE)[0]; index: num
         <div className="flex flex-wrap items-start justify-between gap-4 mb-5">
           <div>
             <div className="flex items-center gap-2 mb-1">
-              <Terminal
-                className={`w-4 h-4 ${scam.isCritical ? "text-red-400" : "text-primary"}`}
-              />
-              <h4
-                className={`text-xl font-black tracking-tight ${
-                  scam.isCritical ? "text-red-400" : "text-primary"
-                }`}
-              >
+              <Terminal className={`w-4 h-4 ${scam.isCritical ? "text-red-400" : "text-primary"}`} />
+              <h4 className={`text-xl font-black tracking-tight ${scam.isCritical ? "text-red-400" : "text-primary"}`}>
                 {scam.name}
               </h4>
             </div>
@@ -637,9 +752,7 @@ function ScamCard({ scam, index }: { scam: (typeof REAL_EVIDENCE)[0]; index: num
               {scam.url} <ExternalLink className="w-3 h-3" />
             </a>
           </div>
-          <div
-            className={`px-3 py-1.5 text-xs font-bold tracking-widest border flex items-center gap-1.5 shrink-0 ${severityColor}`}
-          >
+          <div className={`px-3 py-1.5 text-xs font-bold tracking-widest border flex items-center gap-1.5 shrink-0 ${severityColor}`}>
             <Crosshair className="w-3 h-3" />
             {scam.severity}
           </div>
@@ -649,11 +762,11 @@ function ScamCard({ scam, index }: { scam: (typeof REAL_EVIDENCE)[0]; index: num
           <div className="grid grid-cols-2 gap-4 mb-6 p-4 border border-red-500/30 bg-red-950/20">
             <div className="text-center">
               <div className="text-xs text-muted-foreground mb-1">WHAT THEY ADVERTISE</div>
-              <div className="text-xl font-black text-foreground">{scam.claimedVsReal.claimed}</div>
+              <div className="text-lg font-black text-foreground">{scam.claimedVsReal.claimed}</div>
             </div>
             <div className="text-center">
               <div className="text-xs text-muted-foreground mb-1">THEIR OWN DATABASE SHOWS</div>
-              <div className="text-xl font-black text-red-400">{scam.claimedVsReal.real}</div>
+              <div className="text-lg font-black text-red-400">{scam.claimedVsReal.real}</div>
             </div>
           </div>
         )}
@@ -666,21 +779,15 @@ function ScamCard({ scam, index }: { scam: (typeof REAL_EVIDENCE)[0]; index: num
         </div>
 
         <div className="mb-5">
-          <div className="text-xs text-muted-foreground mb-3 uppercase tracking-widest">
-            — Exposed Information —
-          </div>
+          <div className="text-xs text-muted-foreground mb-3 uppercase tracking-widest">— Exposed Intelligence —</div>
           <div className="space-y-2">
             {scam.exposedInfo.map((info, i) => (
               <div key={i} className="flex items-start gap-3 text-xs">
                 <span className="text-red-400/70 shrink-0 pt-0.5">▸</span>
                 <span className="text-muted-foreground shrink-0 min-w-[160px]">{info.label}:</span>
                 {info.href ? (
-                  <a
-                    href={info.href}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="text-primary hover:text-primary/80 transition-colors flex items-center gap-1"
-                  >
+                  <a href={info.href} target="_blank" rel="noopener noreferrer"
+                    className="text-primary hover:text-primary/80 transition-colors flex items-center gap-1">
                     {info.value} <ExternalLink className="w-2.5 h-2.5" />
                   </a>
                 ) : (
@@ -697,14 +804,9 @@ function ScamCard({ scam, index }: { scam: (typeof REAL_EVIDENCE)[0]; index: num
         >
           <span className="flex items-center gap-2">
             <Terminal className="w-3.5 h-3.5" />
-            {expanded ? "COLLAPSE" : "EXPAND"} SOURCE CODE EVIDENCE (
-            {scam.codeSnippets.length} extracted snippets)
+            {expanded ? "COLLAPSE" : "EXPAND"} SOURCE CODE EVIDENCE ({scam.codeSnippets.length} real extracts)
           </span>
-          {expanded ? (
-            <ChevronUp className="w-3.5 h-3.5" />
-          ) : (
-            <ChevronDown className="w-3.5 h-3.5" />
-          )}
+          {expanded ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
         </button>
 
         <AnimatePresence>
@@ -735,13 +837,13 @@ function ScamCard({ scam, index }: { scam: (typeof REAL_EVIDENCE)[0]; index: num
 
                 {scam.codeSnippets[activeSnippet] && (
                   <div>
-                    <div className="flex items-center justify-between px-4 py-2 bg-zinc-900 border border-border/60 border-b-0">
-                      <span className="text-xs text-muted-foreground leading-relaxed pr-4">
+                    <div className="flex items-start justify-between gap-3 px-4 py-2 bg-zinc-900 border border-border/60 border-b-0">
+                      <span className="text-xs text-muted-foreground leading-relaxed">
                         {scam.codeSnippets[activeSnippet].label}
                       </span>
                       <CopyButton text={scam.codeSnippets[activeSnippet].code} />
                     </div>
-                    <pre className="bg-zinc-950 border border-border/60 p-4 text-xs text-green-400 overflow-x-auto leading-relaxed whitespace-pre-wrap">
+                    <pre className="bg-zinc-950 border border-border/60 p-4 text-xs text-green-400 overflow-x-auto leading-relaxed whitespace-pre-wrap max-h-[400px] overflow-y-auto">
                       <code>{scam.codeSnippets[activeSnippet].code}</code>
                     </pre>
                   </div>
@@ -791,24 +893,20 @@ export function ScamExposed() {
           className="mb-12 max-w-3xl space-y-4"
         >
           <p className="text-muted-foreground leading-relaxed">
-            Internet fraud is a widespread problem originating from Nigeria. Fake betting prediction platforms are built in days using AI tools, collect payments via Paystack or MTN MOMO, and disappear on Telegram. The victims are anyone who trusts them — in Nigeria, Ghana, and beyond.
+            Internet fraud is rampant in Nigeria. Fake betting prediction platforms are built in hours using AI tools, collect payments via Paystack or MTN MOMO, and vanish on Telegram. I reverse-engineer these sites — reading their own JavaScript bundles — to extract real evidence: database credentials, account numbers, operator identities, backend APIs, and business logic.
           </p>
           <p className="text-muted-foreground leading-relaxed">
-            Every finding below was extracted from publicly accessible JavaScript bundles — no hacking required. I wrote scripts to scrape, deobfuscate, and analyse their source code. The evidence is real. None of these sites have been shut down. They are still operating.
+            Everything below was pulled directly from their own public source code. No hacking. No login. No exploitation of private systems. Just curl, grep, and reading what they accidentally left in the open.
           </p>
-          <div className="flex flex-wrap gap-4 font-mono text-xs">
+          <div className="flex flex-wrap gap-4 font-mono text-xs pt-2">
             <span className="flex items-center gap-1.5 text-red-400">
               <AlertOctagon className="w-3 h-3" /> 2 CRITICAL
             </span>
             <span className="flex items-center gap-1.5 text-orange-400">
               <AlertTriangle className="w-3 h-3" /> 5 HIGH
             </span>
-            <span className="flex items-center gap-1.5 text-muted-foreground">
-              7 sites investigated
-            </span>
-            <span className="flex items-center gap-1.5 text-muted-foreground">
-              All operational at time of investigation
-            </span>
+            <span className="flex items-center gap-1.5 text-muted-foreground">7 sites investigated</span>
+            <span className="flex items-center gap-1.5 text-muted-foreground">All active at time of investigation</span>
           </div>
         </motion.div>
 
@@ -825,9 +923,9 @@ export function ScamExposed() {
           className="mt-12 p-6 border border-border/50 bg-card/20 font-mono text-xs text-muted-foreground"
         >
           <div className="text-primary mb-2 flex items-center gap-1.5">
-            <Shield className="w-3.5 h-3.5" /> METHODOLOGY NOTE
+            <Shield className="w-3.5 h-3.5" /> METHODOLOGY
           </div>
-          All evidence was collected via publicly accessible HTTP requests — the same technique as opening DevTools in any browser. JavaScript bundles on these sites are served unprotected to every visitor. No login, no authentication, no exploitation of private systems was required. This is responsible disclosure of information that was already public.
+          All evidence collected via HTTP requests to publicly accessible URLs — identical to opening DevTools in any browser. JavaScript bundles on these sites are served unprotected to every visitor with no authentication. Sources are cited inline in each snippet (file URL and line context). No private systems were accessed. This is responsible disclosure of information that was already public.
         </motion.div>
       </div>
     </section>
