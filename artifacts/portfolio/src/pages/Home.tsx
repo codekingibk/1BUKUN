@@ -2,6 +2,89 @@ import React, { useRef, useState, useEffect, Component, type ReactNode } from "r
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Stars } from "@react-three/drei";
 import * as THREE from "three";
+import { AnimatePresence, motion } from "framer-motion";
+import { ShieldAlert, X, EyeOff } from "lucide-react";
+
+function SecurityNotice() {
+  const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const dismissed = sessionStorage.getItem("sec-notice-dismissed");
+    if (!dismissed) {
+      const t = setTimeout(() => setVisible(true), 900);
+      return () => clearTimeout(t);
+    }
+  }, []);
+
+  function dismiss() {
+    sessionStorage.setItem("sec-notice-dismissed", "1");
+    setVisible(false);
+  }
+
+  return (
+    <AnimatePresence>
+      {visible && (
+        <motion.div
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          exit={{ opacity: 0 }}
+          transition={{ duration: 0.25 }}
+          className="fixed inset-0 z-[9999] flex items-end sm:items-center justify-center sm:p-6 p-0"
+          onClick={dismiss}
+        >
+          <div className="absolute inset-0 bg-black/60 backdrop-blur-sm" />
+          <motion.div
+            initial={{ y: 40, opacity: 0, scale: 0.97 }}
+            animate={{ y: 0, opacity: 1, scale: 1 }}
+            exit={{ y: 20, opacity: 0, scale: 0.97 }}
+            transition={{ duration: 0.3, ease: "easeOut" }}
+            onClick={(e) => e.stopPropagation()}
+            className="relative z-10 w-full sm:max-w-md bg-[#0d1117] border border-border/70 font-mono shadow-2xl shadow-black/80 sm:rounded-none rounded-t-none"
+          >
+            <div className="bg-red-600/90 px-5 py-3 flex items-center justify-between gap-3">
+              <div className="flex items-center gap-2 text-white text-xs font-black tracking-widest">
+                <ShieldAlert className="w-4 h-4 flex-shrink-0" />
+                OPERATIONAL SECURITY NOTICE
+              </div>
+              <button onClick={dismiss} className="text-white/70 hover:text-white transition-colors flex-shrink-0">
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="p-6 space-y-4">
+              <div className="flex items-start gap-3">
+                <EyeOff className="w-5 h-5 text-primary flex-shrink-0 mt-0.5" />
+                <div className="space-y-3">
+                  <p className="text-sm text-foreground leading-relaxed">
+                    You'll notice there's no photo of me on this site. That's deliberate.
+                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    The scam operators documented in the Threat Reports section are real people who are actively losing money because of this research. A name alone is one thing — a name <em className="text-foreground not-italic font-semibold">and</em> a face is a different kind of exposure risk.
+                  </p>
+                  <p className="text-sm text-muted-foreground leading-relaxed">
+                    I'd rather my work speak for me than my face get remembered by the wrong people.
+                  </p>
+                </div>
+              </div>
+
+              <div className="border-t border-border/40 pt-4 flex items-center justify-between gap-4">
+                <span className="text-xs text-muted-foreground">
+                  — Adegboyega Ibukun Enoch
+                </span>
+                <button
+                  onClick={dismiss}
+                  className="text-xs bg-primary text-black px-4 py-2 font-black hover:bg-primary/80 transition-colors"
+                >
+                  UNDERSTOOD
+                </button>
+              </div>
+            </div>
+          </motion.div>
+        </motion.div>
+      )}
+    </AnimatePresence>
+  );
+}
 
 class WebGLErrorBoundary extends Component<{ children: ReactNode; fallback?: ReactNode }, { error: boolean }> {
   constructor(props: { children: ReactNode; fallback?: ReactNode }) {
@@ -196,6 +279,8 @@ export default function Home() {
         </Canvas>
         </WebGLErrorBoundary>}
       </div>
+
+      <SecurityNotice />
 
       {/* DOM content above canvas */}
       <div className="relative z-10">
